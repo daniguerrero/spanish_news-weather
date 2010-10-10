@@ -5,3 +5,14 @@ The script basically do 3 things:
 2.- All that information is sent to festival, who is doing the text to speech conversion and output to the speakers.
 3.- Finally the scripts check the national spanish televesion for a 2 minutes news video, that downloads, trying to bypass
 some obfuscation. Then the video is played with the realtime weather information, an icon showing the weather and also the time.
+
+A cron job is in charge of running it daily from Mon to Fri. Using a bash script that is doing something like:
+
+#!/bin/bash
+pushd .
+cd /home/user/weather
+#lets clean the house first
+find *.flv *.png -type f -mtime +3 -exec rm {} \;
+python alarm_podcast.py
+popd .
+
