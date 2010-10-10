@@ -4,6 +4,7 @@
 #
 # Todo: add some info about what video is playing (date)
 # Note that speech is done via festival package
+# Had to adapt for festival some words for a better english pronuntation like Lyon=Leeon :-)
 
 from xml.dom import minidom
 import urllib
