@@ -59,14 +59,14 @@ def find_video():
     print 'Analizing: '+url
     dom = minidom.parse(urllib.urlopen(url))
     element = dom.getElementsByTagName('link')[1].firstChild.data
-    m = re.search('([0-9]*)\.shtml',element)
+    #m = re.search('/([0-9]*)/',element)
+    m = str(element.split('/')[7])
     #we keep only the regexp
-    s = m.group(1)
-    print s
+    #s = m.group(1)
     #converting string to array list
-    l = list(s)
+    l = list(m)
     print l
-    url2 = 'http://www.rtve.es/swf/data/es/videos/video/'+l[5]+'/'+l[4]+'/'+l[3]+'/'+l[2]+'/'+s+'.xml'
+    url2 = 'http://www.rtve.es/swf/data/es/videos/video/'+l[6]+'/'+l[5]+'/'+l[4]+'/'+l[3]+'/'+m+'.xml'
     print 'Analizing: '+url2
     dom = minidom.parse(urllib.urlopen(url2))
     #here we follow instruction on http://www.carballude.es/blog/?p=871 but with python
@@ -83,6 +83,7 @@ def find_video():
     m = re.search('assetDataId::([0-9]*)',param)
     s = m.group(1)
     l = list(s)
+    print l
     url3 = 'http://www.rtve.es/scd/CONTENTS/ASSET_DATA_VIDEO/'+l[5]+'/'+l[4]+'/'+l[3]+'/'+l[2]+'/'+'ASSET_DATA_VIDEO-'+s+'.xml'
     print 'Analizing: '+url3
     dom = minidom.parse(urllib.urlopen(url3))
@@ -90,10 +91,10 @@ def find_video():
     for node in element:
         if node.getElementsByTagName('key')[0].firstChild.data == 'ASD_FILE':
            value = node.getElementsByTagName('value')[0].firstChild.data
-    m = re.search('(/flv/.*$)',value)
+    m = re.search('(/mp4/.*$)',value)
     s = m.group(1)
     print s
-    p = re.search('([0-9]*)\.flv$',s)
+    p = re.search('([0-9]*)\.mp4$',s)
     t = p.group(1)
     print t
     hidden_video = 'http://www.rtve.es/resources/TE_NGVA/'+s
@@ -117,7 +118,7 @@ def find_video():
     os.system('rm *.gif *.gif.*')
     #running vlc with an embedded icon, realtime temperature and hour.
     os.system('export DISPLAY=:0 && /usr/bin/vlc --fullscreen --sub-filter "logo{file='+ICON_CODE+'.png,x=35,y=540,transparency=200}:marq{marquee=%H:%M,x=10,y=10,size=28}:marq{marquee="'\
-               +weather['current_temp']+'",x=65,y=543,size=28}" --marq-opacity 200 -I rc '+t+'.flv'+' vlc://quit')
+               +weather['current_temp']+'",x=65,y=543,size=28}" --marq-opacity 200 -I rc '+t+'.mp4'+' vlc://quit')
      
 def main():
     create_speech()
