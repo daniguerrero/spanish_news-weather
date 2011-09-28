@@ -1,0 +1,34 @@
+#    This program is free software: you can redistribute it and/or modify
+#    it under the terms of the GNU General Public License as published by
+#    the Free Software Foundation, either version 3 of the License, or
+#    (at your option) any later version.
+#
+#    This program is distributed in the hope that it will be useful,
+#    but WITHOUT ANY WARRANTY; without even the implied warranty of
+#    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#    GNU General Public License for more details.
+#
+#    You should have received a copy of the GNU General Public License
+#    along with this program.  If not, see <http://www.gnu.org/licenses/&gt;.
+#
+#    Author Daniel Guerrero (chancleta at gmail dot com)
+
+#    alarm_podcast.py is a script that helps me not to spend too much time during the morning checking usual things.
+
+#    The script basically do 3 things:
+#    1.- Connects to Yahoo weather to parse the current weather conditions and the forecast.
+#    2.- All that information is sent to festival, who is doing the text to speech conversion and output to the
+#        speakers.
+#    3.- Finally the scripts download the national spanish television for a 2 minutes news video,
+#        trying to bypass some obfuscation. 
+#        Then the video is played with the realtime weather information, an icon showing the
+#        weather and also the time.
+
+#    A cron job is in charge of running it daily from Mon to Fri. Using a bash script that is doing something like:
+#    #!/bin/bash
+#    pushd .
+#    cd /home/user/weather
+#    lets clean the house first
+#    find *.flv *.png -type f -mtime +3 -exec rm {} \;
+#    python alarm_podcast.py
+#    popd .
